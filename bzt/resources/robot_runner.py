@@ -1,3 +1,4 @@
+import os
 import json
 import sys
 import time
@@ -93,11 +94,14 @@ def run_robot(targets, report_file, iteration_limit, duration_limit, variablefil
     stderr = StringIO()
     start_time = int(time.time())
     iteration = 0
+    fhd = os.path.splitext(report_file)[0]
     try:
         while True:
             kwargs = {
                 'listener': listener,  # pass Taurus listener
-                'output': None, 'log': None, 'report': None,  # mute default reporting
+                'output': fhd+'-'+str(iteration)+'_out.xml', 
+                'log': fhd+'-'+str(iteration)+'_log.html', 
+                'report': None,  # mute default reporting
                 'stdout': stdout, 'stderr': stderr,  # capture stdout/stderr
             }
             if variablefile is not None:
